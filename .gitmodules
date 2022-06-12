@@ -1,3 +1,3 @@
 [submodule "roar_carla_ros2"]
-	path = roar_carla_ros2
+	path = src/roar_carla_ros2
 	url = https://github.com/wuxiaohua1011/roar_carla_ros2
