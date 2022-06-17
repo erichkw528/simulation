@@ -1,3 +1,6 @@
 [submodule "roar_carla_ros2"]
 	path = src/roar_carla_ros2
 	url = https://github.com/wuxiaohua1011/roar_carla_ros2
+[submodule "src/gazebo_simulation"]
+	path = src/gazebo_simulation
+	url = https://github.com/wuxiaohua1011/gokart-simulation.git
