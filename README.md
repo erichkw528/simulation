@@ -1,3 +1,9 @@
+<!--
+ Copyright 2023 michael. All rights reserved.
+ Use of this source code is governed by a BSD-style
+ license that can be found in the LICENSE file.
+-->
+
 # roar-indy-sim
 
 All code related to launching simulation and making simulation as close to actual hardware as possible
