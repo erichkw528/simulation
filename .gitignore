@@ -2,3 +2,4 @@
 *log
 *install
 *data
+**/__pycache__/**
