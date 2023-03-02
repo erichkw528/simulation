@@ -7,17 +7,27 @@ import os
 import launch
 from ament_index_python.packages import get_package_share_directory
 import launch_ros
+from launch.conditions import IfCondition
+from launch.substitutions import LaunchConfiguration
+from launch.actions import DeclareLaunchArgument
 
 
 def generate_launch_description():
 
     base_path = os.path.realpath(
-        get_package_share_directory("roar_carla_ros2")
+        get_package_share_directory("roar_carla")
     )  # also tried without realpath
     vehicle_config_path = base_path + "/config/berkeley_gokart.json"
 
+    should_launch_manual_control_args = DeclareLaunchArgument(
+        "should_launch_manual_control",
+        default_value="False",  # default_value=[], has the same problem
+        description="True to start manual control, false otherwise",
+    )
+
     ld = launch.LaunchDescription(
         [
+            should_launch_manual_control_args,
             launch.actions.DeclareLaunchArgument(
                 name="host", default_value="localhost"
             ),
@@ -136,6 +146,9 @@ def generate_launch_description():
                 launch_arguments={
                     "role_name": launch.substitutions.LaunchConfiguration("role_name")
                 }.items(),
+                condition=IfCondition(
+                    LaunchConfiguration("should_launch_manual_control")
+                ),  # 3
             ),
         ]
     )
