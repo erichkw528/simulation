@@ -32,7 +32,7 @@ def generate_launch_description():
                 name="host", default_value="localhost"
             ),
             launch.actions.DeclareLaunchArgument(name="port", default_value="2000"),
-            launch.actions.DeclareLaunchArgument(name="timeout", default_value="2"),
+            launch.actions.DeclareLaunchArgument(name="timeout", default_value="5"),
             launch.actions.DeclareLaunchArgument(
                 name="role_name", default_value="ego_vehicle"
             ),
