@@ -6,6 +6,12 @@ namespace control_converter
 {
     ControlConverter::ControlConverter() : Node("controller_converter")
     {
+        this->declare_parameter("input_max_right_steering", 1.0);
+        this->declare_parameter("input_max_left_steering", -1.0);
+
+        this->INPUT_MAX_RIGHT_STEERING = this->get_parameter("input_max_right_steering").as_double();
+        this->INPUT_MAX_LEFT_STEERING = this->get_parameter("input_max_left_steering").as_double();
+
         // Initialize publisher
         auto_carla_control_publisher_ = this->create_publisher<carla_msgs::msg::CarlaEgoVehicleControl>("/carla/ego_vehicle/vehicle_control_cmd", 10);
         manual_carla_control_publisher_ = this->create_publisher<carla_msgs::msg::CarlaEgoVehicleControl>("/carla/ego_vehicle/vehicle_control_cmd_manual", 10);
@@ -36,7 +42,7 @@ namespace control_converter
     {
         carla_msgs::msg::CarlaEgoVehicleControl output;
         output.throttle = input->drive.jerk;
-        output.steer = input->drive.steering_angle_velocity;
+        output.steer = this->ackermann_to_carla_steering(input->drive.steering_angle_velocity);
         if (input->drive.speed < 0)
         {
             output.reverse = true;
@@ -45,7 +51,17 @@ namespace control_converter
             output.reverse = false;
         }
         return std::make_shared<carla_msgs::msg::CarlaEgoVehicleControl>(output);
-        
+    }
+
+    float ControlConverter::ackermann_to_carla_steering(float ackermann_steering)
+    {
+        return std::max(CARLA_MAX_LEFT_STEERING,
+                std::min(CARLA_MAX_RIGHT_STEERING,
+                this->map_range(ackermann_steering,
+                                CARLA_MAX_LEFT_STEERING,
+                                CARLA_MAX_RIGHT_STEERING,
+                                INPUT_MAX_LEFT_STEERING,
+                                INPUT_MAX_RIGHT_STEERING)));
     }
 }
 
