@@ -18,7 +18,7 @@ namespace control_converter
         carla_manual_override_publisher_ = this->create_publisher<std_msgs::msg::Bool>("/carla/ego_vehicle/vehicle_control_manual_override", 10);
 
         // Initialize subscribers
-        auto_controller_sub_ = this->create_subscription<ackermann_msgs::msg::AckermannDriveStamped>("/ackermann_drive", 10, std::bind(&ControlConverter::auto_controller_callback, this, std::placeholders::_1));
+        auto_controller_sub_ = this->create_subscription<ackermann_msgs::msg::AckermannDriveStamped>("/controller/manager/output", 10, std::bind(&ControlConverter::auto_controller_callback, this, std::placeholders::_1));
         manual_controller_sub_ = this->create_subscription<ackermann_msgs::msg::AckermannDriveStamped>("/ackermann_drive_manual", 10, std::bind(&ControlConverter::manual_controller_callback, this, std::placeholders::_1));
         manual_control_override_sub_ = this->create_subscription<std_msgs::msg::Bool>("/drive_mode", 10, std::bind(&ControlConverter::drive_mode_callback, this, std::placeholders::_1));
     }
