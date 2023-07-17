@@ -20,6 +20,7 @@ def generate_launch_description():
     base_path = Path(get_package_share_directory("roar_carla_interface"))
     config_path: Path = base_path / "param" / "interface_config.yaml"
     assert config_path.exists(), f"{config_path} does not exist"
+
     ld = launch.LaunchDescription(
         [
             launch.actions.DeclareLaunchArgument(
@@ -68,14 +69,27 @@ def generate_launch_description():
             launch.actions.DeclareLaunchArgument(
                 name="control_id", default_value="control"
             ),
-            launch.actions.IncludeLaunchDescription(
-                launch.launch_description_sources.PythonLaunchDescriptionSource(
-                    os.path.join(
-                        get_package_share_directory("carla_ros_bridge"),
-                        "carla_ros_bridge.launch.py",
-                    )
-                ),
-                launch_arguments={
+            launch_ros.actions.Node(
+            package='carla_ros_bridge',
+            executable='bridge',
+            name='carla_ros_bridge',
+            output='screen',
+            emulate_tty='True',
+            on_exit=launch.actions.Shutdown(),
+            remappings=[
+                ('/carla/ego_vehicle/vehicle_info', '/roar/vehicle_info'),
+                ('/carla/ego_vehicle/vehicle_status', '/roar/vehicle_status'),
+                ('/carla/ego_vehicle/odometry', '/roar/odometry'),
+                ('/carla/ego_vehicle/front_depth/camera_info', '/roar/front/depth/camera_info'),
+                ('/carla/ego_vehicle/front_rgb/camera_info', '/roar/front/rgb/camera_info'),
+                ('/carla/ego_vehicle/front_depth/image', '/roar/front/depth/image'),
+                ('/carla/ego_vehicle/front_rgb/image', '/roar/front/rgb/image'),
+                ('/carla/ego_vehicle/imu', '/roar/imu'),
+                ('/carla/ego_vehicle/gnss', '/roar/gnss'),
+                ('/carla/ego_vehicle/center_lidar', '/roar/front/lidar'),
+                ('/carla/ego_vehicle/speedometer', '/roar/speedometer'),
+            ],
+            parameters=[{
                     "host": launch.substitutions.LaunchConfiguration("host"),
                     "port": launch.substitutions.LaunchConfiguration("port"),
                     "town": launch.substitutions.LaunchConfiguration("town"),
@@ -86,8 +100,8 @@ def generate_launch_description():
                     ),
                     "fixed_delta_seconds": launch.substitutions.LaunchConfiguration(
                         "fixed_delta_seconds"
-                    ),
-                }.items(),
+                    )}
+                    ]
             ),
             launch.actions.IncludeLaunchDescription(
                 launch.launch_description_sources.PythonLaunchDescriptionSource(
@@ -136,7 +150,7 @@ def generate_launch_description():
                 name="roar_carla_pid_node",
                 parameters=[config_path.as_posix()],
                 remappings=[
-                    ("vehicle_control", "/vehicle/control"),
+                    ("vehicle_control", "/sim/vehicle/control"),
                     ("carla_control", "/carla/ego_vehicle/vehicle_control_cmd"),
                     ("vehicle_status", "/carla/ego_vehicle/vehicle_status"),
                 ],
