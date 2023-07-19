@@ -14,7 +14,7 @@ from launch.actions import DeclareLaunchArgument
 
 def generate_launch_description():
     manual_control_args = DeclareLaunchArgument(
-        "manual_control",
+        "carla_manual_control",
         default_value="False",  # default_value=[], has the same problem
         description="True to start manual control, false otherwise",
     )
@@ -39,7 +39,7 @@ def generate_launch_description():
                         "roar_carla_manual_controller.launch.py",
                     )
                 ),
-                condition=IfCondition(LaunchConfiguration("manual_control")),  # 3
+                condition=IfCondition(LaunchConfiguration("carla_manual_control")),  # 3
             ),
         ]
     )

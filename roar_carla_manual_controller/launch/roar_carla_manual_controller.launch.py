@@ -22,7 +22,7 @@ def generate_launch_description():
                 name="roar_carla_manual_controller",
                 parameters=[config_path.as_posix()],
                 remappings=[
-                    ("roar_carla_cmd", "/vehicle/control"),
+                    ("roar_carla_cmd", "/sim/vehicle/control"),
                     ("image", "/carla/ego_vehicle/rgb_view/image"),
                 ],
             ),
