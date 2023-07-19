@@ -23,7 +23,8 @@ setup(
     tests_require=["pytest"],
     entry_points={
         "console_scripts": [
-            "carla_pid_node = roar_carla_interface.carla_pid_node:main"
+            "carla_pid_node = roar_carla_interface.carla_pid_node:main",
+            "roar_carla_converter_node = roar_carla_interface.roar_to_carla_converter_node:main"
         ],
     },
 )

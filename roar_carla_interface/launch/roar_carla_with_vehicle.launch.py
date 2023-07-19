@@ -152,9 +152,18 @@ def generate_launch_description():
                 remappings=[
                     ("vehicle_control", "/sim/vehicle/control"),
                     ("carla_control", "/carla/ego_vehicle/vehicle_control_cmd"),
-                    ("vehicle_status", "/carla/ego_vehicle/vehicle_status"),
+                    ("vehicle_status", "/roar/vehicle_status"),
                 ],
             ),
+            launch_ros.actions.Node(
+                package="roar_carla_interface",
+                executable="roar_carla_converter_node",
+                name="roar_carla_converter_node",
+                remappings=[
+                    ("sim_vehicle_control", "/sim/vehicle/control"),
+                    ("roar_vehicle_control", "/roar/vehicle/control"),
+                ]
+            )
         ]
     )
     return ld
