@@ -24,7 +24,8 @@ setup(
     entry_points={
         "console_scripts": [
             "carla_pid_node = roar_carla_interface.carla_pid_node:main",
-            "roar_carla_converter_node = roar_carla_interface.roar_to_carla_converter_node:main"
+            "roar_carla_converter_node = roar_carla_interface.roar_to_carla_converter_node:main",
+            "carla_depth_img_converter_node = roar_carla_interface.carla_depth_img_converter_node:main"
         ],
     },
 )
