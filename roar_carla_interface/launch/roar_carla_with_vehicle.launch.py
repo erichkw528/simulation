@@ -163,7 +163,17 @@ def generate_launch_description():
                     ("sim_vehicle_control", "/sim/vehicle/control"),
                     ("roar_vehicle_control", "/roar/vehicle/control"),
                 ]
+            ),
+            launch_ros.actions.Node(
+                package="roar_carla_interface",
+                executable="carla_depth_img_converter_node",
+                name="carla_depth_img_converter_node",
+                remappings=[
+                    ("carla_depth", "/roar/front/depth/image"),
+                    ("carla_image_processed", "/roar/front/depth/image/processed"),
+                ]
             )
+
         ]
     )
     return ld
