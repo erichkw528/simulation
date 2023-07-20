@@ -36,14 +36,9 @@ def generate_launch_description():
             ),
             launch.actions.DeclareLaunchArgument(
                 name="spawn_point",
-                default_value={
-                    "x": 265.0,
-                    "y": -65.0,
-                    "z": 0.0,
-                    "roll": 0.0,
-                    "pitch": 0.0,
-                    "yaw": 90.0,
-                },
+                default_value="221.45166015625,363.315,2.0,0.0,0.0,0.0" # x,y,z,roll,pitch,yaw
+                # default_value=["221.45166015625", "363.315", "0.0", "0.0", "0.0", "90.0"],
+
             ),
             launch.actions.DeclareLaunchArgument(
                 name="spawn_point_ego_vehicle", default_value="spawn_point_hero0"
@@ -121,7 +116,7 @@ def generate_launch_description():
                     "spawn_point": launch.substitutions.LaunchConfiguration(
                         "spawn_point"
                     ),
-                    "spawn_point_ego_vehicle": "specify_ego_vehicle_spawn_in_objects_definition_file",
+                    "spawn_point_ego_vehicle": LaunchConfiguration("spawn_point"),
                     "objects_definition_file": launch.substitutions.LaunchConfiguration(
                         "objects_definition_file"
                     ),
