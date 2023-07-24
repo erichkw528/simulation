@@ -36,7 +36,7 @@ def generate_launch_description():
             ),
             launch.actions.DeclareLaunchArgument(
                 name="spawn_point",
-                default_value="9.36,19.84,1.0,0.0,0.0,90" # x,y,z,roll,pitch,yaw
+                default_value="9.36,19.84,0.0,0.0,0.0" # x,y,z,roll,pitch,yaw
 
             ),
             launch.actions.DeclareLaunchArgument(
@@ -167,9 +167,17 @@ def generate_launch_description():
                     ("carla_image_processed", "/roar/front/depth/image/processed"),
                 ]
             )
-
         ]
     )
+
+    static_transform_publisher = launch_ros.actions.Node(
+        package="tf2_ros",
+        executable="static_transform_publisher",
+        name="carla_ros_static_transform_publisher",
+        output="screen",
+        arguments=["0", "0", "0", "0", "0", "0", "ego_vehicle", "base_link"],
+    )
+    ld.add_action(static_transform_publisher)
     return ld
 
 

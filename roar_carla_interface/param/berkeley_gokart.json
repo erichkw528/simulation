@@ -18,11 +18,11 @@
         },
         {
             "type": "vehicle.tesla.model3",
-            "id": "base_link",
+            "id": "ego_vehicle",
             "sensors": [
                 {
                     "type": "sensor.camera.rgb",
-                    "id": "camera",
+                    "id": "front_rgb",
                     "spawn_point": {
                         "x": 3.0,
                         "y": 0.0,
@@ -37,7 +37,7 @@
                 },
                 {
                     "type": "sensor.camera.depth",
-                    "id": "camera_depth",
+                    "id": "front_depth",
                     "spawn_point": {
                         "x": 3.0,
                         "y": 0.0,
