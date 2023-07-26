@@ -93,7 +93,7 @@
                 },
                 {
                     "type": "sensor.other.gnss",
-                    "id": "gps_antenna",
+                    "id": "gnss",
                     "spawn_point": {
                         "x": 0.0,
                         "y": 0.0,

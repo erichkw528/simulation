@@ -36,7 +36,7 @@ def generate_launch_description():
             ),
             launch.actions.DeclareLaunchArgument(
                 name="spawn_point",
-                default_value="9.36,19.84,0.0,0.0,0.0" # x,y,z,roll,pitch,yaw
+                default_value="11.90, 4.70, 1.0,0.0,0.0,90.0" # x,y,z,roll,pitch,yaw
 
             ),
             launch.actions.DeclareLaunchArgument(
