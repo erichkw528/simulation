@@ -178,6 +178,17 @@ def generate_launch_description():
         arguments=["0", "0", "0", "0", "0", "0", "ego_vehicle", "base_link"],
     )
     ld.add_action(static_transform_publisher)
+
+
+    static_transform_publisher_map_odom = launch_ros.actions.Node(
+        package="tf2_ros",
+        executable="static_transform_publisher",
+        name="carla_ros_static_transform_publisher",
+        output="screen",
+        arguments=["0", "0", "0", "0", "0", "0", "map", "odom"],
+    )
+    ld.add_action(static_transform_publisher_map_odom)
+
     return ld
 
 
