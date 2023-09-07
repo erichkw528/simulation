@@ -154,7 +154,7 @@ def generate_launch_description():
                 remappings=[
                     ("vehicle_status", "/roar/vehicle/status"),
                     ("vehicle_control", "/roar/vehicle/control"),
-                    ("vehicle_speed", "/roar/vehicle/speed")
+                    ("vehicle_speed", "/carla/ego_vehicle/speedometer")
                 ],
             ),
             launch_ros.actions.Node(

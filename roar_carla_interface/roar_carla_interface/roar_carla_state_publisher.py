@@ -37,6 +37,7 @@ class RoarCarlaStatePublisher(Node):
     
     def on_timer(self):
         msg = VehicleStatus()
+        msg.header.stamp = self.get_clock().now().to_msg()
         msg.speed = float(self.latest_speed_reading)
         msg.steering_angle_deg = float(self.latest_steering_angle)
         self.publisher.publish(msg)
