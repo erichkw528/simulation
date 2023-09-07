@@ -71,8 +71,6 @@ def generate_launch_description():
             emulate_tty='True',
             on_exit=launch.actions.Shutdown(),
             remappings=[
-                ('/carla/ego_vehicle/vehicle_info', '/roar/vehicle_info'),
-                ('/carla/ego_vehicle/vehicle_status', '/roar/vehicle_status'),
                 ('/carla/ego_vehicle/odometry', '/roar/odometry'),
                 ('/carla/ego_vehicle/front_depth/camera_info', '/roar/front/depth/camera_info'),
                 ('/carla/ego_vehicle/front_rgb/camera_info', '/roar/front/rgb/camera_info'),
@@ -81,7 +79,6 @@ def generate_launch_description():
                 ('/carla/ego_vehicle/imu', '/roar/imu'),
                 ('/carla/ego_vehicle/gnss', '/roar/gnss'),
                 ('/carla/ego_vehicle/center_lidar', '/roar/front/lidar'),
-                ('/carla/ego_vehicle/speedometer', '/roar/speedometer'),
             ],
             parameters=[{
                     "host": launch.substitutions.LaunchConfiguration("host"),
@@ -146,7 +143,18 @@ def generate_launch_description():
                 remappings=[
                     ("vehicle_control", "/sim/vehicle/control"),
                     ("carla_control", "/carla/ego_vehicle/vehicle_control_cmd"),
-                    ("vehicle_status", "/roar/vehicle_status"),
+                    ("vehicle_status", "/carla/ego_vehicle/vehicle_status"),
+                ],
+            ),
+            launch_ros.actions.Node(
+                package="roar_carla_interface",
+                executable="roar_carla_state_publisher",
+                name="roar_carla_state_publisher",
+                parameters=[config_path.as_posix()],
+                remappings=[
+                    ("vehicle_status", "/roar/vehicle/status"),
+                    ("vehicle_control", "/roar/vehicle/control"),
+                    ("vehicle_speed", "/roar/vehicle/speed")
                 ],
             ),
             launch_ros.actions.Node(

@@ -12,7 +12,7 @@ import cv2
 
 class CarlaDepthImageConverter(Node):
     def __init__(self):
-        super().__init__("roar_carla_converter_node")
+        super().__init__("carla_depth_img_converter_node")
 
         # timers
         self.declare_parameter("refresh_rate", 0.05)
